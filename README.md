@@ -32,9 +32,29 @@ Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
 
 #### Part 2: Optimize Frames per Second in pizza.html
 
-To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js. 
+To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js.
+set the width and height of the images as a style attribute
 
-You might find the FPS Counter/HUD Display useful in Chrome developer tools described here: [Chrome Dev Tools tips-and-tricks](https://developer.chrome.com/devtools/docs/tips-and-tricks).
+```HTML
+// .. code
+(<img style="width: 100px; height: 50px;")
+// .. code
+```
+
+Time to resize pizzas is less than 5 ms
+
+```js
+// .. code
+function changePizzaSizes(size) {
+  var elements = document.querySelectorAll(".randomPizzaContainer"); // get reference to container before hand
+  var dx = determineDx(elements[0], size); // get width change
+  var newwidth = (elements[0].offsetWidth + dx) + 'px'; // compute new width
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].style.width = newwidth;
+  }
+}
+// .. code
+```
 
 ### Optimization Tips and Tricks
 * [Optimizing Performance](https://developers.google.com/web/fundamentals/performance/ "web performance")
