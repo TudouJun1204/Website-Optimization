@@ -33,10 +33,40 @@ Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
 #### Part 2: Optimize Frames per Second in pizza.html
 
 To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js.
+
 set the width and height of the images as a style attribute
 
 ```HTML
 (<img style="width: 100px; height: 50px;")
+```
+
+Replace query selector with getElementById, which is supposed to be faster.
+
+```js
+// .. code
+document.addEventListener('DOMContentLoaded', function() {
+  var cols = 8;
+  var s = 256;
+  var pizzasOnPage = Math.ceil(screen.height / s) * 8
+  console.log(pizzasOnPage);
+  var movingPizzas = document.getElementById('movingPizzas1');
+  /* Move the items variable out of the loop above.
+     Replace query selector with getElementById, which is supposed to be faster. */
+
+  for (var i = 0; i < pizzasOnPage; i++) {
+    var elem = document.createElement('img');
+    elem.className = 'mover';
+    elem.src = "images/pizza.png";
+    elem.style.height = "100px";
+    elem.style.width = "73.333px";
+    elem.basicLeft = (i % cols) * s;
+    elem.style.top = (Math.floor(i / cols) * s) + 'px';
+    movingPizzas.appendChild(elem);
+  }
+  items = document.getElementsByClassName('mover');
+  updatePositions();
+});
+// .. code
 ```
 
 Time to resize pizzas is less than 5 ms
