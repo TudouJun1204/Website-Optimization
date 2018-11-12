@@ -36,9 +36,7 @@ To optimize views/pizza.html, you will need to modify views/js/main.js until you
 set the width and height of the images as a style attribute
 
 ```HTML
-// .. code
 (<img style="width: 100px; height: 50px;")
-// .. code
 ```
 
 Time to resize pizzas is less than 5 ms
