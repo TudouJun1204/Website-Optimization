@@ -11,22 +11,22 @@ To get started, check out the repository and inspect the code.
 Some useful tips to help you get started:
 
 1. Check out the repository
-1. To inspect the site on your phone, you can run a local server
+-  To inspect the site on your phone, you can run a local server
 
   ```bash
   $> cd /path/to/your-project-folder
   $> python -m SimpleHTTPServer 8080
   ```
 
-1. Open a browser and visit localhost:8080
-1. Download and install [ngrok](https://ngrok.com/) to the top-level of your project directory to make your local server accessible remotely.
+2. Open a browser and visit localhost:8080
+- Download and install [ngrok](https://ngrok.com/) to the top-level of your project directory to make your local server accessible remotely.
 
   ``` bash
   $> cd /path/to/your-project-folder
   $> ./ngrok http 8080
   ```
 
-1. Copy the public URL ngrok gives you and try running it through PageSpeed Insights! Optional: [More on integrating ngrok, Grunt and PageSpeed.](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
+- Copy the public URL ngrok gives you and try running it through PageSpeed Insights! Optional: [More on integrating ngrok, Grunt and PageSpeed.](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
 
 Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
 
@@ -34,13 +34,16 @@ Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
 
 To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js.
 
-set the width and height of the images as a style attribute
+1. set the width and height of the images as a style attribute
 
 ```HTML
 (<img style="width: 100px; height: 50px;")
 ```
 
-Replace query selector with getElementById, which is supposed to be faster.
+2. to achieve a resizing time less than 5 ms
+  - Replace query selector with getElementById();
+  - Replace querySelectorAll to getElementsByClassName();
+  which is supposed to be faster.
 
 ```js
 // .. code
@@ -69,18 +72,26 @@ document.addEventListener('DOMContentLoaded', function() {
 // .. code
 ```
 
-Time to resize pizzas is less than 5 ms
+3. Due to the mod 5 operator, there are only 5 different values for the phase. Whichever the value of i, i%5 is always a value from 0 to 4. So, calculating phase values inside the main loop is a waste of resources.
+
+the best option is making two loops, one for the phases (0 to 4) and the other for the positions (0 to items.length).
+
 
 ```js
 // .. code
-function changePizzaSizes(size) {
-  var elements = document.querySelectorAll(".randomPizzaContainer"); // get reference to container before hand
-  var dx = determineDx(elements[0], size); // get width change
-  var newwidth = (elements[0].offsetWidth + dx) + 'px'; // compute new width
-  for (var i = 0; i < elements.length; i++) {
-    elements[i].style.width = newwidth;
+var items = document.getElementsByClassName('mover');
+function updatePositions() {
+  frame++;
+  window.performance.mark("mark_start_frame");
+  var phase = [];
+  var scrollTop = document.documentElement.scrollTop;
+  for (var i = 0; i < 5; i++) {
+      phase.push(Math.sin(scrollTop / 1250 + i));
   }
-}
+
+  for (var i = 0, max = items.length; i < max; i++) {
+      items[i].style.left = items[i].basicLeft + 100 * phase[i%5] + 'px';
+  }
 // .. code
 ```
 
