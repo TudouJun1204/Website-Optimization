@@ -34,9 +34,11 @@ Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
 
 To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js.
 
-1. downscaled and compressed the pizzeria image. 
-   According to the pizza.html page, you don't need an image larger than 400 px wide.
+1. downscaled and compressed the pizzeria image.
+  - According to the pizza.html page, you don't need an image larger than 400 px wide.
 
+2. Minify JS
+  - Compressed JavaScript files as main-mim.js.
 
 2. to achieve a resizing time less than 5 ms
   - Replace query selector with getElementById();
