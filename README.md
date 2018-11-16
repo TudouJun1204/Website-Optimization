@@ -34,11 +34,9 @@ Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
 
 To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js.
 
-1. set the width and height of the images as a style attribute
+1. downscaled and compressed the pizzeria image. 
+   According to the pizza.html page, you don't need an image larger than 400 px wide.
 
-```HTML
-(<img style="width: 100px; height: 50px;")
-```
 
 2. to achieve a resizing time less than 5 ms
   - Replace query selector with getElementById();
@@ -74,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 3. Due to the mod 5 operator, there are only 5 different values for the phase. Whichever the value of i, i%5 is always a value from 0 to 4. So, calculating phase values inside the main loop is a waste of resources.
 
-the best option is making two loops, one for the phases (0 to 4) and the other for the positions (0 to items.length).
+   the best option is making two loops, one for the phases (0 to 4) and the other for the positions (0 to items.length).
 
 
 ```js
